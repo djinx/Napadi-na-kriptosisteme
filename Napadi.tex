@@ -42,19 +42,70 @@ U ovom delu, upoznajemo se sa protokolom razmene ključa, interaktivnim protokol
 	\item[Priprema:] Bira se prost broj $p$ oblika $p = l^{e_A}_{A} \cdot l^{e_B}_{B} \cdot f \pm 1$ gde su $l_{A}$ i  $l_{B}$ različiti mali prosti brojevi, $f$ je mali kofaktor, dok su $e_A$ i $e_B$ pozitivni celi brojevi takvi da važi $l^{e_A}_{A} \approx l^{e_B}_{B}$. Zatim je potrebno odrediti supersingularnu eliptičku krivu $E$ u polju $\mathbb{F}_{p^2}$ i početne tačke \{$P_A, Q_A$\} i \{$P_B, Q_B$\}. 
 	
 	
-	\item[Generisanje ključa:] Alisa slučajno odabira elemente $a_1, a_2 \in \mathbb{Z}/l^{e_A}_{A}\mathbb{Z}$, takve da nisu oba deljiva sa $l_A$ i određuje podgrupu $G_A = <h[a1]P_A + [a2]Q_A>$. Zatim koristi Veluovu (V\' elu) formulu da odredi krivu $E_A = E/G_A$ i izogeniju $\phi_A: E \longrightarrow E_A$, gde je $ker \phi_A = G_A$. Alisa takođe računa tačke $\phi_A(P_B)$ i $\phi_A(Q_B)$. Onda Bobu šalje torku $(E_A, \phi_A(P_B), \phi_A(Q_B))$. Bob  zatim vrši izračunavanja sa druge strane.
+	\item[Generisanje ključa:] Alisa slučajno odabira elemente $a_1, a_2 \in \mathbb{Z}/l^{e_A}_{A}\mathbb{Z}$, takve da nisu oba deljiva sa $l_A$ i određuje podgrupu $G_A = \langle h[a1]P_A + [a2]Q_A \rangle $. Zatim koristi Veluovu (V\' elu) formulu da odredi krivu $E_A = E/G_A$ i izogeniju $\phi_A: E \longrightarrow E_A$, gde je $ker \phi_A = G_A$. Alisa takođe računa tačke $\phi_A(P_B)$ i $\phi_A(Q_B)$. Onda Bobu šalje torku $(E_A, \phi_A(P_B), \phi_A(Q_B))$. Bob  zatim vrši izračunavanja sa druge strane.
 	
-	\item[Poreklo ključa:] Kada primi Bobovu torku $(E_B, \phi_B(P_A), \phi_B(Q_A))$, Alisa određuje podgrupu $G_A' = <h[a1]\phi_B(P_A) + [a2]\phi_B(Q_A)>$ i koristi Veluovu formulu da odredi krivu $E_{AB} = E_B / G_A'$. Zatim koristi j-invarijantu krive $E_{AB}$ kao zajedničku tajnu. Bob postupa na isti način. Protokol rezimiramo na slici \ref{fig: razmena kljuca}.
+	\item[Poreklo ključa:] Kada primi Bobovu torku $(E_B, \phi_B(P_A), \phi_B(Q_A))$, Alisa određuje podgrupu $G_A' = \langle h[a1]\phi_B(P_A) + [a2]\phi_B(Q_A) \rangle$ i koristi Veluovu formulu da odredi krivu $E_{AB} = E_B / G_A'$. Zatim koristi j-invarijantu krive $E_{AB}$ kao zajedničku tajnu. Bob postupa na isti način. Protokol rezimiramo na slici \ref{fig: razmena kljuca}.
 	
 \end{description}
 
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.8\textwidth]{razmena_kljuca.png}
+	\includegraphics[width=0.5\textwidth]{razmena_kljuca.png}
 	\caption{Protokol razmene ključa}
 	\label{fig: razmena kljuca}
 \end{figure}
+
+\iffalse
+\paragraph{Interaktivni protokol identifikacije} Ovaj protokol ima četiri koraka: priprema, predaja, izazov i odgovor.
+
+\begin{description}
+	\item[Priprema:] Bira se prost broj $p$ oblika $p = l^{e_A}_{A} \cdot l^{e_B}_{B} \cdot f \pm 1$ gde su $l_{A}$ i  $l_{B}$ različiti mali prosti brojevi, $f$ je mali kofaktor, dok su $e_A$ i $e_B$ pozitivni celi brojevi takvi da važi $l^{e_A}_{A} \approx l^{e_B}_{B}$. Zatim je potrebno odrediti supersingularnu eliptičku krivu $E$ u polju $\mathbb{F}_{p^2}$. Proveravač slučajno bira element.
+	
+	\item[Predaja:] 
+	
+	\item[Izazov:]
+	
+	\item[Odgovor:] 
+	
+\end{description}
+\fi 
+
+\section{Napad umetanjem greške}
+
+Pretrpostavimo da je napadnuti protokol otkriva $x$-koordinatu slike tačke pod tajnom izogenijom. Napad umetanjem greške cilja da natera implementaciju da kao rezultat da sliku slučajno odabrane tačke pod tajnom izogenijom. Ovo bi protivniku omogućilo da otkrije tajnu. Primetimo da ova izračunavanja ne uključuju $y$-koordinatu tačaka. 
+
+Ako nam je daat kriva $E$ i tačka $P$, promena $x$-koordinate tačke $P$ rezultovaće drugom tačkom, $P_0$ na istoj krivoj. Ako nam je dato $x$ možemo da dobijemo $y$ rešavanjem kvadratne jednačine, koja u prostoru $\mathbb{F}_{p^2}$ uvek ima rešenje. Konkretno, svako $x \in \mathbb{F}_{p^2}$ odgovara tački na krivoj $E$ ili na krivoj $E'$, koja predstavlja njen kvadratni obrt. U najefikasnijim implementacijama kriptografskih sistema do sada, izračunavanja ne razlikuju krive $E$ i $E'$ tako da će izogenija biti izračunata tačno za svako $x \in \mathbb{F}_{p^2}$. 
+
+
+\subsection{Dobijanje izogenije iz slike slučajno odabrane tačke}
+
+Neka je $E/\mathbb{F}_{p^2}$ supersingularna eliptička kriva gde je  $p = l^{e_A}_{A} \cdot l^{e_B}_{B} \cdot f \pm 1$. Zatim sa tačkama ($P_A$, $Q_A$), ($P_B$, $Q_B$) i
+($P_C$, $Q_C$) koje su generatori redom za $E[l^{e_A}_{A}]$, $E[l^{e_B}_{B}]$ i $E[f]$, slučajno odabrana tačka $X \in E(\mathbb{F_{p^2}})$ ima oblik
+
+$$X = [u]P_A + [v]Q_A + [w]P_B + [x]Q_B + [y]P_C + [z]Q_C$$
+
+\noindent za neke $u, v, w, x, y, z \in \mathbb{Z}$
+
+Sad pretpostavimo da nam je data slika tačke $X$ pod izogenijom $\phi_A$, onda ćemo pokazati kako neko može da iskoristi $\phi_A(X)$ da dobije $\phi_A$. Pošto je $\phi_A$ homomorfizam grupe i znamo da $X$ može biti izraženo linearnom kombinacijom  $P_A$, $Q_A$, $P_B$, $Q_B$, $P_C$ i $Q_C$ imamo sledeći izraz
+
+$$\phi_A(X) = \phi_A([u]P_A + [v]Q_A + [w]P_B + [x]Q_B + [y]P_C + [z]Q_C) $$
+$$= [u]\phi_A(P_A) + [v]\phi_A(Q_A) + [w]\phi_A(P_B) $$
+$$+ [x]\phi_A(Q_B) + [y]\phi_A(P_C) + [z]\phi_A(Q_C)$$
+
+
+\noindent Sada nam je cilj da izolujemo linearnu kombinaciju $ \phi_A(P_A)$ i  $ \phi_A(Q_A)$. Do kraja izvodimo operaciju:
+
+$$[l^{e_B}_{B} \cdot f]\phi_A(X) = [l^{e_B}_{B} \cdot f] ([u]\phi_A(P_A) + [v]\phi_A(Q_A))$$
+$$= [u']\phi_A(P_A) + [v']\phi_A(Q_A)$$
+
+Jednom kad dobijemo $ [u']\phi_A(P_A) + [v']\phi_A(Q_A)$, podgrupa generisana do sada će pomoći u konstruisanju izogenije $\phi_A$.
+
+
+\textbf{Lema 1.} Neka je $E_1$ supersingularna eliptička kriva u $\mathbb{F}_{p^2}$, gde je $p = l^{e_A}_{A} \cdot l^{e_B}_{B} \cdot f \pm 1$. Pretpostavimo da je $\phi : E_1 \longrightarrow E_2$ izogenija stepena $l_A^{e_A}$ i  neka su $\{P, Q\}$ generatori za $E_1[l_A^{e_A}]$. Tada za bilo koje $X \in E[l_A^{e_A}]$ definiši $\psi : E_2 \longrightarrow E'$ takvo da je $ker \psi = \langle \phi(X) \rangle$, onda postoji $\theta: E' \longrightarrow E_1$ koje je stepena $l_A^t$, tako da je $t \leq e_A$, takvo da je 
+
+$$\phi' = \theta \circ \psi$$.  
+
 
 
 \end{document}
