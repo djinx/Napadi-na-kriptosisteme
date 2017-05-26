@@ -1,5 +1,7 @@
 \documentclass[a4paper]{article}
 
+
+\usepackage[margin=1.5in]{geometry}
 \usepackage{color}
 \usepackage{url}
 \usepackage[utf8]{inputenc} % make weird characters work
@@ -7,23 +9,27 @@
 
 \usepackage[english,serbian]{babel}
 %\usepackage[english,serbianc]{babel} %ukljuciti babel sa ovim opcijama, umesto gornjim, ukoliko se koristi cirilica
-\setcounter{tocdepth}{1}
+\setcounter{tocdepth}{3}
 \usepackage[unicode]{hyperref}
 \hypersetup{colorlinks,citecolor=green,filecolor=green,linkcolor=blue,urlcolor=blue}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage[linesnumbered,ruled]{algorithm2e}
 
 \begin{document}
 
 \title{Napadi na supersingularne kriptografske sisteme umetanjem greške\\ \small{~\\Seminarski rad u okviru kursa Kriptografija\\ Prof. Miodrag Živković\\Matematički fakultet}}
 
-\author{Bukurov Anja}
+\author{Bukurov Anja 1082/2016}
 \date{27.~maj 2017.}
 \maketitle
 
 \abstract{
 Predstavljamo prvi napad umetanjem greške na kripto sisteme koji su zasnovani na supersingularnim izogenijima. Tokom računanja pomoćnih tačaka, napad cilja da promeni početnu tačku nekom slučajno odabranom tačkom na krivoj umetanjem greške. Pokazaćemo da će ovakav napad otkriti tajnu izogeniju jednom uspešnom smetnjom koja ima visoku verovatnoću uspeha.}
 
+\tableofcontents
+
+\newpage
 
 \section{Uvod}
 
@@ -33,8 +39,9 @@ Napad umetanjem greške iskorišćava curenje osetljivih informacija kada implem
 
 
 \section{Supersingularni izogeni kriptografski sistem}
+\label{sec: razmena kljuca}
 
-U ovom delu, upoznajemo se sa protokolom razmene ključa, interaktivnim protokolom identifikacije i raznim signaturnim shemama. 
+U ovom delu, upoznajemo se sa protokolom razmene ključa.
 
 \paragraph{Razmena ključa} Pretpostavimo da Alisa i Bob žele da uspostave zajedničku tajnu. Moraju izvršiti tri koraka kako bi to uradili:
 
@@ -56,20 +63,6 @@ U ovom delu, upoznajemo se sa protokolom razmene ključa, interaktivnim protokol
 	\label{fig: razmena kljuca}
 \end{figure}
 
-\iffalse
-\paragraph{Interaktivni protokol identifikacije} Ovaj protokol ima četiri koraka: priprema, predaja, izazov i odgovor.
-
-\begin{description}
-	\item[Priprema:] Bira se prost broj $p$ oblika $p = l^{e_A}_{A} \cdot l^{e_B}_{B} \cdot f \pm 1$ gde su $l_{A}$ i  $l_{B}$ različiti mali prosti brojevi, $f$ je mali kofaktor, dok su $e_A$ i $e_B$ pozitivni celi brojevi takvi da važi $l^{e_A}_{A} \approx l^{e_B}_{B}$. Zatim je potrebno odrediti supersingularnu eliptičku krivu $E$ u polju $\mathbb{F}_{p^2}$. Proveravač slučajno bira element.
-	
-	\item[Predaja:] 
-	
-	\item[Izazov:]
-	
-	\item[Odgovor:] 
-	
-\end{description}
-\fi 
 
 \section{Napad umetanjem greške}
 
@@ -104,8 +97,40 @@ Jednom kad dobijemo $ [u']\phi_A(P_A) + [v']\phi_A(Q_A)$, podgrupa generisana do
 
 \textbf{Lema 1.} Neka je $E_1$ supersingularna eliptička kriva u $\mathbb{F}_{p^2}$, gde je $p = l^{e_A}_{A} \cdot l^{e_B}_{B} \cdot f \pm 1$. Pretpostavimo da je $\phi : E_1 \longrightarrow E_2$ izogenija stepena $l_A^{e_A}$ i  neka su $\{P, Q\}$ generatori za $E_1[l_A^{e_A}]$. Tada za bilo koje $X \in E[l_A^{e_A}]$ definiši $\psi : E_2 \longrightarrow E'$ takvo da je $ker \psi = \langle \phi(X) \rangle$, onda postoji $\theta: E' \longrightarrow E_1$ koje je stepena $l_A^t$, tako da je $t \leq e_A$, takvo da je 
 
-$$\phi' = \theta \circ \psi$$.  
+$$\widehat{\phi} = \theta \circ \psi$$.  
+
+Lema nam govori da ako nam je data slika tačke na krivoj $E_1[l^{e_A}_A]$ u izogeniji $\phi$, onda možemo da pronađemo izogeniju $\psi$ koja je približna izogeniji $\phi$. Kako bismo dobili $\psi$ prvo moramo da otkrijemo $\theta$. Ako je $t$ dovoljno malo, onda možemo dobiti $\theta$ grubom silom. U većini slučajeva $t$ jeste dovoljno malo. U nastavku je dat algoritam za dobijanje izogenije za slučajno odabranu tačku.
 
 
+\begin{algorithm}
+	\label{alg: napad greskom}
+	\SetKwInOut{Input}{Data}
+	\SetKwInOut{Output}{Output}
+	
+	\Input{$\phi(X)$}
+	\Output{$\widehat{\phi}$}
+
+	Postavi $\lambda \longleftarrow l_B^{e_B} \cdot f$ \;
+	Postavi $T \longleftarrow [\lambda]\phi(X)$ \;
+	Postavi $\psi: E_2 \longrightarrow E'$ kao izogeniju sa jezgrom $T$\;
+	\eIf{ $ord(T) = l_A^{e_A}$}
+		{
+			return $\psi$
+		}
+		{
+			Gruba sila za računanje $\theta$
+		}
+	return $\theta \circ \psi$
+	\caption{Dobijanje izogenije nakon napada umetanjem greške}
+\end{algorithm}
+
+
+\subsection{Izvodljivost napada na protokol razmene ključeva}
+
+Razmotrimo protokol razmene ključa opisanog u \ref{sec: razmena kljuca}. Pretpostavimo da protivnik pokušava da sazna Alisinu tajnu izogeniju i ima mogućnost da izazove grešku u ALisinom računu. Nakon računanja sa greškom, Alisa objavljuje ključ $(E_A; \phi_A(X), \phi_A(Q_B))$. Protivnik će onda biti u mogučnosti da otkrije $\phi_A$ pomoću Algoritma \ref{alg: napad greskom}.
+\\
+\\
+Pretpostavimo da jedna strana koristi statički ključ u protokolu razmene ključeva. Protivnik bi bio u mogućnosti da otkrije tajnu izogeniju ako se statički javni ključ preračunava za svaku razmenu. Ipak, to nije verovatno da se desi jer se $\phi_A(P_B)$ i $\phi_A(Q_B)$ fiksiraju u programu (engl. hardcode) zbog efikasnosti. 
+Sada pretpostavimo da protivnik napada protokol razmene ključa sa kratkotrajnim ključevima. Ako tajne nisu autentifikovane, protivnik je u mogućnosti da izračuna $\phi_A(P_B)$ i pošalje to umesto $\phi_A(X)$. Na ovaj način, obe strane mogu izvesti istu deljenu tajnu. Pošto se otkrivanje $\phi_A$ pomoću  $\phi_A(X)$ može izvesti efikasno i računanje  $\phi_A(P_B)$ je egikasno, izvođenje zamene pre nego što istekne vreme za konekciju je veoma izvodljivo. Ipak, treba primetiti da je, ako tajne nisu autentifikovane, bolje kotistiti napad ‚‚čovek u sredini'' (engl. man-in-the-middle attack).
 
 \end{document}
