@@ -24,7 +24,7 @@
 \maketitle
 
 \abstract{
-U ovom radu biće predstavljen prvi napad umetanjem greške na kriptografske sisteme koji su zasnovani na supersingularnim izogenijima. Tokom računanja pomoćnih tačaka, napad cilja da promeni početnu tačku nekom slučajno odabranom tačkom na krivoj umetanjem greške. BIće pokazano da ovakav napad može otkriti tajnu izogeniju jednom uspešnom smetnjom koja ima visoku verovatnoću uspeha.}
+U ovom radu biće predstavljen prvi napad umetanjem greške na kriptografske sisteme koji su zasnovani na supersingularnim izogenijima. Tokom računanja pomoćnih tačaka, napad cilja da promeni početnu tačku nekom slučajno odabranom tačkom na krivoj umetanjem greške. Biće pokazano da ovakav napad može otkriti tajnu izogeniju jednom uspešnom smetnjom koja ima visoku verovatnoću uspeha.}
 
 \tableofcontents
 
@@ -40,7 +40,7 @@ Napad umetanjem greške iskorišćava curenje osetljivih informacija kada implem
 \section{Supersingularni izogeni kriptografski sistem}
 \label{sec: razmena kljuca}
 
-U ovom delu, upoznajemo se sa protokolom razmene ključa.
+\noindent U ovom delu, upoznajemo se sa protokolom razmene ključa.
 
 \paragraph{Razmena ključa} Pretpostavimo da Alisa i Bob žele da uspostave zajedničku tajnu. Oni moraju izvršiti tri koraka kako bi to učinili:
 
@@ -48,9 +48,9 @@ U ovom delu, upoznajemo se sa protokolom razmene ključa.
 	\item[Priprema:] Bira se prost broj $p$ oblika $p = l^{e_A}_{A} \cdot l^{e_B}_{B} \cdot f \pm 1$ gde su $l_{A}$ i  $l_{B}$ različiti mali prosti brojevi, $f$ je mali kofaktor, dok su $e_A$ i $e_B$ pozitivni celi brojevi takvi da važi $l^{e_A}_{A} \approx l^{e_B}_{B}$. Zatim je potrebno odrediti supersingularnu eliptičku krivu $E$ u polju $\mathbb{F}_{p^2}$ i početne tačke \{$P_A, Q_A$\} i \{$P_B, Q_B$\}. 
 	
 	
-	\item[Generisanje ključa:] Alisa slučajno odabira elemente $a_1, a_2 \in \mathbb{Z}/l^{e_A}_{A}\mathbb{Z}$, takve da nisu oba deljiva sa $l_A$ i određuje podgrupu $G_A = \langle h[a1]P_A + [a2]Q_A \rangle $. Zatim koristi Veluovu (fran. V\' elu) \cite{velu} formulu da odredi krivu $E_A = E/G_A$ i izogeniju $\phi_A: E \longrightarrow E_A$, gde je $ker \phi_A = G_A$. Alisa takođe računa tačke $\phi_A(P_B)$ i $\phi_A(Q_B)$. Onda Bobu šalje torku $(E_A, \phi_A(P_B), \phi_A(Q_B))$. Bob zatim vrši izračunavanja sa druge strane.
+	\item[Generisanje ključa:] Alisa slučajno odabira elemente $a_1, a_2 \in \mathbb{Z}/l^{e_A}_{A}\mathbb{Z}$, takve da nisu oba deljiva sa $l_A$ i određuje podgrupu $G_A = \langle [a1]P_A + [a2]Q_A \rangle $. Zatim koristi Veluovu (fran. V\' elu) \cite{velu} formulu da odredi krivu $E_A = E/G_A$ i izogeniju $\phi_A: E \longrightarrow E_A$, gde je $ker \phi_A = G_A$. Alisa takođe računa tačke $\phi_A(P_B)$ i $\phi_A(Q_B)$. Onda Bobu šalje torku $(E_A, \phi_A(P_B), \phi_A(Q_B))$. Bob zatim vrši izračunavanja sa druge strane.
 	
-	\item[Poreklo ključa:] Kada primi Bobovu torku $(E_B, \phi_B(P_A), \phi_B(Q_A))$, Alisa određuje podgrupu $G_A' = \langle h[a1]\phi_B(P_A) + [a2]\phi_B(Q_A) \rangle$ i koristi Veluovu formulu da odredi krivu $E_{AB} = E_B / G_A'$. Zatim koristi $j$-invarijantu krive $E_{AB}$ kao zajedničku tajnu. Bob postupa na isti način. Protokol rezimiramo na slici \ref{fig: razmena kljuca}.
+	\item[Poreklo ključa:] Kada primi Bobovu torku $(E_B, \phi_B(P_A), \phi_B(Q_A))$, Alisa određuje podgrupu $G_A' = \langle [a1]\phi_B(P_A) + [a2]\phi_B(Q_A) \rangle$ i koristi Veluovu formulu da odredi krivu $E_{AB} = E_B / G_A'$. Zatim koristi $j$-invarijantu krive $E_{AB}$ kao zajedničku tajnu. Bob postupa na isti način. Protokol rezimiramo na slici \ref{fig: razmena kljuca}.
 	
 \end{description}
 
@@ -92,19 +92,19 @@ $$[l^{e_B}_{B} \cdot f]\phi_A(X) = [l^{e_B}_{B} \cdot f] ([u]\phi_A(P_A) + [v]\p
 $$= [u']\phi_A(P_A) + [v']\phi_A(Q_A)$$
 
 Jednom kad dobijemo $ [u']\phi_A(P_A) + [v']\phi_A(Q_A)$, podgrupa generisana do sada će pomoći u konstruisanju izogenije $\phi_A$.
+\\
+\\
+\textbf{Lema 3.1.} \label{lema: 1} Neka je $E_1$ supersingularna eliptička kriva u $\mathbb{F}_{p^2}$, gde je $p = l^{e_A}_{A} \cdot l^{e_B}_{B} \cdot f \pm 1$. Pretpostavimo da je $\phi : E_1 \longrightarrow E_2$ izogenija stepena $l_A^{e_A}$ i neka su $\{P, Q\}$ generatori za $E_1[l_A^{e_A}]$. Tada za bilo koje $X \in E[l_A^{e_A}]$ definiši $\psi : E_2 \longrightarrow E'$ takvo da je $ker \psi = \langle \phi(X) \rangle$, onda postoji $\theta: E' \longrightarrow E_1$ koje je stepena $l_A^t$, tako da je $t \leq e_A$, takvo da je 
 
+$$\widehat{\phi} = \theta \circ \psi.$$
 
-\textbf{Lema 1.} Neka je $E_1$ supersingularna eliptička kriva u $\mathbb{F}_{p^2}$, gde je $p = l^{e_A}_{A} \cdot l^{e_B}_{B} \cdot f \pm 1$. Pretpostavimo da je $\phi : E_1 \longrightarrow E_2$ izogenija stepena $l_A^{e_A}$ i neka su $\{P, Q\}$ generatori za $E_1[l_A^{e_A}]$. Tada za bilo koje $X \in E[l_A^{e_A}]$ definiši $\psi : E_2 \longrightarrow E'$ takvo da je $ker \psi = \langle \phi(X) \rangle$, onda postoji $\theta: E' \longrightarrow E_1$ koje je stepena $l_A^t$, tako da je $t \leq e_A$, takvo da je 
-
-$$\widehat{\phi} = \theta \circ \psi$$.  
-
-Lema nam govori da ako nam je data slika tačke na krivoj $E_1[l^{e_A}_A]$ u izogeniji $\phi$, onda možemo da pronađemo izogeniju $\psi$ koja je približna izogeniji $\phi$. Kako bismo dobili $\psi$ prvo moramo da otkrijemo $\theta$. Ako je $t$ dovoljno malo, onda možemo dobiti $\theta$ grubom silom. U većini slučajeva $t$ jeste dovoljno malo. U nastavku je dat algoritam za dobijanje izogenije za slučajno odabranu tačku.
+Lema \ref{lema: 1} nam govori da ako nam je data slika tačke na krivoj $E_1[l^{e_A}_A]$ u izogeniji $\phi$, onda možemo da pronađemo izogeniju $\psi$ koja je približna izogeniji $\phi$. Kako bismo dobili $\psi$ prvo moramo da otkrijemo $\theta$. Ako je $t$ dovoljno malo, onda možemo dobiti $\theta$ grubom silom. U većini slučajeva $t$ jeste dovoljno malo. U nastavku je dat algoritam za dobijanje izogenije za slučajno odabranu tačku.
 
 
 \begin{algorithm}
 	\label{alg: napad greskom}
-	\SetKwInOut{Input}{Data}
-	\SetKwInOut{Output}{Output}
+	\SetKwInOut{Input}{Ulaz}
+	\SetKwInOut{Output}{Izlaz}
 	
 	\Input{$\phi(X)$}
 	\Output{$\widehat{\phi}$}
@@ -134,6 +134,8 @@ Pretpostavimo da jedna strana koristi statički ključ u protokolu razmene klju�
 Sada pretpostavimo da protivnik napada protokol razmene ključa sa kratkotrajnim ključevima. Ako tajne nisu autentifikovane, protivnik je u mogućnosti da izračuna $\phi_A(P_B)$ i pošalje to umesto $\phi_A(X)$. Na ovaj način, obe strane mogu izvesti istu deljenu tajnu. Pošto se otkrivanje $\phi_A$ pomoću  $\phi_A(X)$ može izvesti efikasno i računanje  $\phi_A(P_B)$ je efikasno, izvođenje zamene pre nego što istekne vreme za konekciju je veoma izvodljivo. Ipak, treba primetiti da je, ako tajne nisu autentifikovane, bolje koristiti napad ‚‚čovek u sredini'' (engl. man-in-the-middle attack).
 
 
+\addcontentsline{toc}{section}{Literatura}
+\appendix
 \begin{thebibliography}{11}
 	
 	\bibitem{Fault Attack On Supersingular Isogeny Cryptosystems}
@@ -169,6 +171,6 @@ Sada pretpostavimo da protivnik napada protokol razmene ključa sa kratkotrajnim
 	C.R. Acad. Sc. Paris, S\' erie A. 273,
 	1971.
 \end{thebibliography}
-
+\bibliographystyle{plain}
 
 \end{document}
